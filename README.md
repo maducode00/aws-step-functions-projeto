@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Projeto AWS Step Functions
 
 Este projeto implementa um fluxo de trabalho com AWS Step Functions para validar, processar e notificar arquivos enviados ao S3.
@@ -46,3 +47,6 @@ Certifique-se de que cada função Lambda tenha permissões adequadas via IAM:
 
 O tópico SNS deve ter uma assinatura ativa (ex: e-mail) para receber os alertas.
 
+=======
+# aws-step-functions-projeto
+>>>>>>> f864374d27677ff26e0f9a05a601182d3f88c10f
