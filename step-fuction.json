@@ -1,0 +1,35 @@
+{
+  "Comment": "Fluxo de trabalho para validar, processar e notificar arquivos",
+  "StartAt": "ValidarArquivo",
+  "States": {
+    "ValidarArquivo": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:sa-east-1:123456789012:function:ValidarArquivo",
+      "Next": "EnviarParaFila"
+    },
+    "EnviarParaFila": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage",
+      "Parameters": {
+        "QueueUrl": "https://sqs.sa-east-1.amazonaws.com/123456789012/FilaProcessamento",
+        "MessageBody.$": "$.dados"
+      },
+      "Next": "ProcessarArquivo"
+    },
+    "ProcessarArquivo": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:sa-east-1:123456789012:function:ProcessarArquivo",
+      "Next": "SalvarNoDynamoDB"
+    },
+    "SalvarNoDynamoDB": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:sa-east-1:123456789012:function:SalvarNoDynamoDB",
+      "Next": "Notificar"
+    },
+    "Notificar": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:sa-east-1:123456789012:function:Notificar",
+      "End": true
+    }
+  }
+}
